@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Agenda una sesion con el equipo de Saptiva. Descubre como llevar IA a produccion en semanas.">
+  <meta property="og:title" content="Saptiva - Agenda una Demo">
+  <meta property="og:description" content="Agenda una sesion con nuestro equipo y descubre como acelerar tus resultados de IA.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="../shared/assets/latam-map-servers.png">
+  <title>Agenda una Demo - Saptiva</title>
+
+  <link rel="icon" href="../shared/assets/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/styles.css">
+
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .demo-section {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding-top: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .demo-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(26,39,68,0.3) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,39,68,0.3) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    .demo-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .demo-info h1 {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--text-white);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .demo-tagline {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    .demo-description {
+      font-size: 17px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 500px;
+    }
+
+    .demo-benefits {
+      list-style: none;
+    }
+
+    .demo-benefits li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-white);
+      font-size: 15px;
+      margin-bottom: 14px;
+    }
+
+    .demo-benefits li svg {
+      width: 20px;
+      height: 20px;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .demo-email {
+      margin-top: 24px;
+      font-size: 16px;
+      color: var(--text-muted);
+    }
+
+    .demo-email a {
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* Form card */
+    .form-card {
+      background: var(--bg-white);
+      border-radius: 16px;
+      padding: 48px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 16px;
+      font-family: var(--font-family);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      background: white;
+      color: var(--text-dark);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 229, 176, 0.15);
+    }
+
+    .form-group input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .phone-input-wrapper {
+      display: flex;
+      gap: 8px;
+    }
+
+    .country-select {
+      width: 100px;
+      padding: 14px 12px;
+      font-size: 16px;
+      font-family: var(--font-family);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      background: white;
+      cursor: pointer;
+    }
+
+    .phone-input-wrapper input {
+      flex: 1;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 16px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: var(--font-family);
+      background: var(--primary);
+      color: var(--bg-dark);
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.1s ease;
+      margin-top: 8px;
+    }
+
+    .btn-submit:hover { background: var(--primary-hover); }
+    .btn-submit:active { transform: scale(0.98); }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    /* Success state */
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .success-message.show { display: block; }
+    .success-message svg { width: 64px; height: 64px; margin-bottom: 24px; color: var(--primary); }
+    .success-message h2 { font-size: 24px; color: var(--text-dark); margin-bottom: 12px; }
+    .success-message p { color: var(--text-muted); font-size: 16px; }
+    .form-content.hide { display: none; }
+
+    @media (max-width: 1024px) {
+      .demo-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .demo-info { text-align: center; }
+      .demo-info h1 { font-size: 36px; }
+      .demo-description { margin: 0 auto 32px; }
+      .demo-benefits { display: inline-block; text-align: left; }
+    }
+    @media (max-width: 768px) {
+      .demo-info h1 { font-size: 28px; }
+      .form-card { padding: 32px 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      .phone-input-wrapper { flex-direction: column; gap: 12px; }
+      .country-select { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+  <nav class="nav" role="navigation" aria-label="Navegacion principal">
+    <div class="nav-left">
+      <a href="../home/" class="nav-logo" aria-label="Saptiva - Inicio">
+        <img src="../home/assets/saptiva-logo.png" alt="Saptiva AI" style="height: 28px; width: auto;">
+      </a>
+      <ul class="nav-links">
+        <li><a href="../home/" class="nav-link">Inicio</a></li>
+        <li class="nav-dropdown">
+          <a href="#" class="nav-link nav-dropdown-toggle">Industrias <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <ul class="nav-dropdown-menu">
+            <li><a href="../financial-services/" class="nav-dropdown-item">Servicios Financieros</a></li>
+            <li><a href="../gobierno/" class="nav-dropdown-item">Gobierno</a></li>
+          </ul>
+        </li>
+        <li><a href="../home/#productos" class="nav-link">Productos</a></li>
+        <li><a href="../home/#porque" class="nav-link">Por que Saptiva</a></li>
+      </ul>
+    </div>
+    <div class="nav-cta">
+      <a href="https://lab.saptiva.com/api/auth/signin?callbackUrl=%2Flogin" class="btn-secondary btn-secondary-sm">Iniciar sesion</a>
+    </div>
+    <button class="nav-hamburger" onclick="document.querySelector('.nav-links').classList.toggle('mobile-open')" aria-label="Abrir menu de navegacion">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main id="main-content">
+    <section class="demo-section section-dark">
+      <div class="container">
+        <div class="demo-grid">
+          <div class="demo-info">
+            <h1>Estamos listos para <span class="accent">ayudarte</span></h1>
+            <p class="demo-tagline">Hablemos de IA.</p>
+            <p class="demo-description">
+              Ya sea que estes construyendo, escalando o integrando IA, nos encantaria ayudarte. Exploremos juntos lo que es posible.
+            </p>
+            <ul class="demo-benefits">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Sesion de 30 minutos — sin compromiso
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Evaluacion de tu contexto regulatorio e infraestructura
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Roadmap personalizado de implementacion
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                Demo en vivo de la plataforma Saptiva
+              </li>
+            </ul>
+            <p class="demo-email">O escribenos a <a href="mailto:hi@saptiva.com">hi@saptiva.com</a></p>
+          </div>
+
+          <div class="form-card">
+            <form id="demo-form" class="form-content">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="name">Nombre</label>
+                  <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                  <label for="lastname">Apellido</label>
+                  <input type="text" id="lastname" name="lastname" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Correo corporativo</label>
+                <input type="email" id="email" name="email" placeholder="tu@empresa.com" required>
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Telefono</label>
+                <div class="phone-input-wrapper">
+                  <select class="country-select" id="country-code" name="country_code">
+                    <option value="+52">+52</option>
+                    <option value="+1">+1</option>
+                    <option value="+57">+57</option>
+                    <option value="+56">+56</option>
+                    <option value="+54">+54</option>
+                    <option value="+55">+55</option>
+                    <option value="+51">+51</option>
+                  </select>
+                  <input type="tel" id="phone" name="phone" placeholder="(55) 1234-5678">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="company">Empresa</label>
+                <input type="text" id="company" name="company" required>
+              </div>
+
+              <button type="submit" class="btn-submit">Enviar</button>
+              <p class="form-note">Sin compromiso. Respondemos en menos de 24 horas.</p>
+            </form>
+
+            <div class="success-message" id="success-message">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              <h2>Mensaje enviado</h2>
+              <p>Nos pondremos en contacto contigo pronto.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../home/assets/saptiva-logo.png" alt="Saptiva AI" style="height: 28px; width: auto;">
+          <p>El Sistema Operativo de IA para Latinoamerica.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Productos</h4>
+          <a href="../home/#productos">RAGster</a>
+          <a href="../home/#productos">Bank Advisor</a>
+          <a href="../home/#productos">FRIDA</a>
+        </div>
+        <div class="footer-col">
+          <h4>Industrias</h4>
+          <a href="../financial-services/">Servicios Financieros</a>
+          <a href="../gobierno/">Gobierno</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <a href="mailto:hi@saptiva.com">hi@saptiva.com</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Saptiva AI. Todos los derechos reservados.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacidad</a>
+          <a href="#">Terminos</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('demo-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var formData = new FormData(this);
+      var data = Object.fromEntries(formData);
+      console.log('Form submitted:', data);
+      document.querySelector('.form-content').classList.add('hide');
+      document.getElementById('success-message').classList.add('show');
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 40" width="140" height="40">
+  <g fill="#99a1b3">
+    <path d="M20 8.5C13.7 8.5 8.5 13.7 8.5 20S13.7 31.5 20 31.5h3.5v-5.7H20c-3.2 0-5.8-2.6-5.8-5.8s2.6-5.8 5.8-5.8h3.5V8.5H20z"/>
+    <path d="M34.5 8.5H31v23h3.5c6.3 0 11.5-5.2 11.5-11.5S40.8 8.5 34.5 8.5zm0 17.3H37V14.2h-2.5c-3.2 0-5.8 2.6-5.8 5.8s2.6 5.8 5.8 5.8z"/>
+    <text x="80" y="25" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="2">ORACLE</text>
+  </g>
+</svg>
